@@ -1,6 +1,9 @@
 ---
-title: "about programming in Base R"
-format: pdf
+title: "About programming in Base R"
+format: 
+  pdf:
+    code-overflow: wrap
+    fontsize: 9pt
 editor: visual
 ---
 
@@ -36,13 +39,13 @@ mean(diff_op)
 which(diff_op >0)
 ```
 
-#Question 6 Subset for only for subjects with positive change
+### Question 6 Subset for only for subjects with positive change
 
 ```{r}
 diff_op[ diff_op > 0] 
 ```
 
-###Question 7 average of those that bp decreased
+### Question 7 average of those that bp decreased
 
 ```{r}
 mean(diff_op > 0)
@@ -184,15 +187,17 @@ if (bp_df_placebo$post_placebo[i] <= 120) {
 ## Task 5: Function Writing
 
 ### Question 1
+
 ```{r eval = FALSE}
 
-function_writing <- function (list) { #creating a function with an input and hopefully I can fill in bp_list later
+function_writing <- function (list) { #creating a function with an input and hopefully I can fill in 
+  #bp_list later
   mean(list)
 } 
 
 
-#I needed to somehow make mean the default for when I typed in chunk my function name (function_writing) it would return the mean hopefully it was numeric. If not another error would pop up. I would also be able to call my function in the console and it would yield the mean. And if I wanted other summary statistics then it would I would have to specify var (function_writing) or something similar.
-##This question stumped me I will need to attend office hours. I am going to turn this in Tuesday night wrong/ incomplete but if I think of how to fix by Wednesday night I will try again
-
 ```
-
+I needed to somehow make mean the default for when I typed in chunk my function name (function_writing) 
+it would return the mean hopefully it was numeric. 
+If not another error would pop up. I would also be able to call my function in the console and it would yield the mean. And if I wanted other summary statistics then it would I would have to specify var (function_writing) or something similar.
+This question stumped me, I will need to attend office hours. I am going to turn this in Tuesday night wrong/ incomplete but if I think of how to fix by Wednesday night I will try again
