@@ -1,0 +1,198 @@
+---
+title: "about programming in Base R"
+format: pdf
+editor: visual
+---
+
+## Task 1: Basic Vector Practice
+
+### Question 1 and 2
+
+```{r}
+pre <- c(130, 128, 116, 124, 133, 134, 118, 126, 114, 127, 141, 138, 128, 140, 137, 131, 120, 128, 139, 135)
+post <- c(114, 98, 113, 99, 107, 116, 113, 111, 119, 117, 101, 119, 130, 122, 106, 106, 124, 102, 117, 113)
+
+subjectnames<-paste("Subject", 1:20, sep = "_")
+names (pre) <- subjectnames
+names (post) <- subjectnames
+```
+
+### Question 3
+
+```{r}
+diff_op <- (pre - post)
+diff_op
+```
+
+### Question 4
+
+```{r}
+mean(diff_op)
+```
+
+### Question 5
+
+```{r}
+which(diff_op >0)
+```
+
+#Question 6 Subset for only for subjects with positive change
+
+```{r}
+diff_op[ diff_op > 0] 
+```
+
+###Question 7 average of those that bp decreased
+
+```{r}
+mean(diff_op > 0)
+```
+
+## Task 2: Basic Data Frame practice
+
+### Question 1
+
+make a data from with Patient, pre, post, diff_op
+
+```{r}
+dataframeq1 <- data.frame(subjectnames, pre, post, diff_op)
+```
+
+### Question 2
+
+```{r}
+dataframeq1[dataframeq1$diff_op < 0,]
+```
+
+### Question 3
+
+Adding new column to data frame
+
+```{r}
+dataframeq1$post_less_than_120 <- dataframeq1$post < 120
+```
+
+### Question 4
+
+print the data frame neatly
+
+```{r}
+knitr::kable(dataframeq1)
+```
+
+## Task 3: List Practice
+
+### Question 1
+
+Creating a new treatment data from with n = 10
+
+```{r}
+pre_placebo <- c(138, 135, 147, 117, 152, 134, 114, 121, 131, 130)
+post_placebo <- c(105, 136, 123, 130, 134, 143, 135, 139, 120, 124)
+diff_placebo <- pre_placebo - post_placebo
+normal <-(post_placebo < 120)
+
+subjectnames_placebo<-paste("Subject", 1:10, sep = "_")
+names (pre_placebo) <- subjectnames_placebo
+names (post_placebo) <- subjectnames_placebo
+bp_df_placebo <- data.frame( subjectnames_placebo, pre_placebo, post_placebo, diff_placebo, normal)
+```
+
+### Question 2
+
+Create and store a list with two elements
+
+```{r}
+bp_list <- list (treatment= dataframeq1, placebo = bp_df_placebo)
+```
+
+### Question 3
+
+Access the first list element using three different syntax
+
+```{r}
+bp_list[1] #way 1
+```
+
+```{r}
+#way 2
+bp_list[[1]]
+```
+
+```{r}
+#way 3 
+bp_list$treatment
+```
+
+### Question 4
+
+in one, access the placebo data frame, pre_bp column
+
+```{r}
+bp_list [[2]] $pre_placebo
+```
+
+## Task 4: Control Flow Practice
+
+### Question 1
+
+creating new column for each called status
+
+```{r}
+dataframeq1$status <- character(20) #or 10 depending on number of observations
+bp_df_placebo$status <-character(10) 
+```
+
+###Question 2 non placebo data frame (with in the list), if/then/else logic
+
+```{r}
+for (i in 1:nrow(dataframeq1)) {
+  
+if (dataframeq1$post[i] <= 120) {
+  dataframeq1$status[i] <- "optimal"
+  
+} else if (dataframeq1$post[i] < 120 & dataframeq1$post[i] <= 130) {
+  dataframeq1$status[i] <- "borderline"
+  
+} else if(dataframeq1$post[i] > 130) {
+  dataframeq1$status[i] <- "high"
+}
+  
+}
+```
+
+### Question 4
+
+Repeat above process but for placebo
+
+```{r}
+
+for (i in 1:nrow(bp_df_placebo)) {
+  
+if (bp_df_placebo$post_placebo[i] <= 120) {
+  bp_df_placebo$status[i] <- "optimal"
+  
+} else if (bp_df_placebo$post_placebo[i] < 120 & bp_df_placebo$post_placebo[i][i] <= 130) {
+  bp_df_placebo$status[i] <- "borderline"
+  
+} else if(bp_df_placebo$post_placebo[i] > 130) {
+  bp_df_placebo$status[i] <- "high"}
+}
+  
+```
+
+## Task 5: Function Writing
+
+### Question 1
+```{r eval = FALSE}
+
+function_writing <- function (list) { #creating a function with an input and hopefully I can fill in bp_list later
+  mean(list)
+} 
+
+
+#I needed to somehow make mean the default for when I typed in chunk my function name (function_writing) it would return the mean hopefully it was numeric. If not another error would pop up. I would also be able to call my function in the console and it would yield the mean. And if I wanted other summary statistics then it would I would have to specify var (function_writing) or something similar.
+##This question stumped me I will need to attend office hours. I am going to turn this in Tuesday night wrong/ incomplete but if I think of how to fix by Wednesday night I will try again
+
+```
+
